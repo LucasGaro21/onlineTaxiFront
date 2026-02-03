@@ -43,12 +43,18 @@ const Chat = ({userName}) => {
 
   const sendMessage = () => {
     console.log('user'+userName)
-    if (stompClientRef.current && stompClientRef.current.connected) {
+    if (stompClientRef.current && stompClientRef.current.connected && input.trim() !== '') {
       stompClientRef.current.publish({
         destination: '/app/chat.sendMessage',
         body: JSON.stringify({ content: input, sender: userName, receiver : 'conductor' }),
       });
       setInput('');
+    }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      sendMessage();
     }
   };
 
@@ -72,6 +78,7 @@ const Chat = ({userName}) => {
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
+          onKeyPress={handleKeyPress}
           className="input"
           placeholder="Escribe un mensaje..."
         />

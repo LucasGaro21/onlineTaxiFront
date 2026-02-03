@@ -81,6 +81,12 @@ const ChatConductor = () => {
     }
   };
 
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      sendMessage();
+    }
+  };
+
   return (
     <div className="chat-conductor-container">
       <div className="chat-conductor-names">
@@ -102,7 +108,7 @@ const ChatConductor = () => {
             messages.map((message, index) => (
               <div
                 key={index}
-                className={`chat-conductor-message-item ${message.sender === 'conductor' ? 'left' : 'right'}`}
+                className={`chat-conductor-message-item ${message.sender === 'conductor' ? 'right' : 'left'}`}
               >
                 {message.content}
               </div>
@@ -117,6 +123,7 @@ const ChatConductor = () => {
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
+              onKeyPress={handleKeyPress}
               className="chat-conductor-input-field"
               placeholder="Escribe aqui un mensaje al pasajero..."
             />
